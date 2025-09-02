@@ -1,3 +1,4 @@
+vnote_backup_file_826537664 G:/vnoteinfor/Vnote/vscode环境搭建/环境搭建.md
 # 1. 环境搭建
 ## 1.1. 准备工作
 准备好交叉编译工具链，将其拷贝到ubuntu虚拟中，然后添加其环境变量如
