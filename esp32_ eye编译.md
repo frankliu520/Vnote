@@ -1,0 +1,10 @@
+# esp32_ eye编译
+
+# Step 1: 设置目标芯片
+idf.py set-target esp32s3
+
+# Step 2: 用 esp32-s3-eye 板配置 + 切换到行人检测模型
+idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.bsp.esp32_s3_eye_noglib" -D DETECT_MODEL="pedestrian_detect" build
+
+# Step 3: 烧录运行
+idf.py flash monitor

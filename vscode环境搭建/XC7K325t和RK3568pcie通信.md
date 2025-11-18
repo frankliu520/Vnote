@@ -1,16 +1,20 @@
-vnote_backup_file_826537664 G:/vnoteinfor/Vnote/vscode环境搭建/Program_B复位加载FPGAbit.md
-# 1. Program_B复位加载FPGAbit
-## 1.1. 概述
-  本文档，描述了使用arm端对FPGA进行动态bit加载，完成fpga程序动态升级的功能，升级方式采用Program_B复位 AS+spi的方式。
-## 1.2. 准备工作
-### 1.2.1. 硬件平台
- 本次硬件平台为瑞芯微RK3568+xilinx xc7k325T 产品设计之处考虑了全国产的使用场景。
-### 1.2.2. 软件平台
+# XC7K325t和RK3568pcie通信
+
+1.1. 概述
+本文档，描述了rk3568和FPGA通过pcie2.0通信的研发使用过程，完成fpga程序动态升级的功能，升级方式采用Program_B复位 AS+spi的方式。
+
+1.2. 准备工作
+1.2.1. 硬件平台
+本次硬件平台为瑞芯微RK3568+xilinx xc7k325T 产品设计之初始考虑了全国产的使用场景。
+
+1.2.2. 软件平台
 搭建飞凌开发环境，可以自己搭建也可以用官方提供好的虚拟机，注意使用虚拟机或服务器，电脑配置大于内存大于16G,硬盘容量大于500G
 下载飞凌嵌入式内核源码，先进行全编译，需要编译文件系统时，需单独编译，编译完成后会将生成的rootfs.img替换linuxfs/rootfs.img文件，后续执行build.sh仍然使用linuxfs/rootfs.img文件。具体参考官方指导文档链接此处目的是为了获取交叉编译工具，为后续qt/svcode交差编译环境搭建提供基础，编译buildroot时间比较长耐心等待
-## 1.3. 修改设备树
-设备树保持原状其实就可以  注意spi的设备树配置一定要开启注意最大频率其配置参考
-```
+
+1.3. 修改设备树
+设备树保持原状其实就可以 注意spi的设备树配置一定要开启注意最大频率其配置参考
+
+📋
 &spi0 {
 	pinctrl-names = "default", "high_speed";
 	pinctrl-0 = <&spi0m1_cs0 &spi0m1_pins>;
@@ -42,11 +46,10 @@ vnote_backup_file_826537664 G:/vnoteinfor/Vnote/vscode环境搭建/Program_B复�
 		spi-max-frequency = <50000000>;
 	};
 };
-```
-## 1.4. 升级代码
-### 1.4.1. h文件
-#### 1.4.1.1. fpga.h文件
-```
+1.4. 升级代码
+1.4.1. h文件
+1.4.1.1. fpga.h文件
+📋
 /*******************************************************************************
  * FileName:fpga.h
  * Author: dll    Date:2025-10-23
@@ -106,9 +109,8 @@ int test_standard_spi(void) ;
 int fpga_node_free(void);
 #endif
 
-```
-#### 1.4.1.2. include "lr_errors.h文件
-```
+1.4.1.2. include "lr_errors.h文件
+📋
 #ifndef LR_ERRORS_H_
 #define LR_ERRORS_H_
 
@@ -118,10 +120,9 @@ int fpga_node_free(void);
 #define LR_ERR ioctl        -2
 
 #endif /* LR_ERRORS_H_ */
-```
-### 1.4.2. .c文件
-#### 1.4.2.1. fpga.c
-```
+1.4.2. .c文件
+1.4.2.1. fpga.c
+📋
 
 /*******************************************************************************
  * FileName:fpga.c
@@ -707,9 +708,8 @@ int test_standard_spi(void)
     close(fd);
     return ret;
 }
-```
-#### 1.4.2.2. 测试加载程序
-```
+1.4.2.2. 测试加载程序
+📋
     printf("FPGA Loader Test Program\n");
     
     // 先测试标准SPI
@@ -727,11 +727,7 @@ int test_standard_spi(void)
     
 
     return result;
-```
-
-
-## 1.5. 注意事项
-| 序号 |                                         内容                                         |
-| --- | ------------------------------------------------------------------------------------ |
-| 1    | 注意根据实际使用情况分清使用的是标准spi还是使用的自定义spi,应该注意spi的延时时间设置       |
-| 2    | 应该严格遵守Program_B复位 AS+spi 升级模式下的时序逻辑控制，当对应引脚状态正常后，再使能spi |
+1.5. 注意事项
+序号	内容
+1	注意根据实际使用情况分清使用的是标准spi还是使用的自定义spi,应该注意spi的延时时间设置
+2	应该严格遵守Program_B复位 AS+spi 升级模式下的时序逻辑控制，当对应引脚状态正常后，再使能spi
