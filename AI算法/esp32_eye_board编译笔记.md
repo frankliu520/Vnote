@@ -1,5 +1,4 @@
-vnote_backup_file_826537664 G:/vnoteinfor/Vnote/esp32_ eye编译.md
-# esp32_ eye编译
+# esp32_eye_board编译笔记
 
 # Step 1: 设置目标芯片
 idf.py set-target esp32s3
@@ -7,8 +6,7 @@ idf.py set-target esp32s3
 # Step 2: 用 esp32-s3-eye 板配置 + 切换到行人检测模型
 idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.bsp.esp32_s3_eye_noglib" -D DETECT_MODEL="pedestrian_detect" build
 
-# Step 3: 烧录运行
-idf.py flash monitor
+
 
 
 
@@ -36,3 +34,7 @@ idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.bsp.esp32_s3_eye_noglib" `
        set-target esp32s3
 
 idf.py build
+
+
+#  烧录运行监视
+idf.py flash monitor~~~~

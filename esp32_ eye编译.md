@@ -8,3 +8,30 @@ idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.bsp.esp32_s3_eye_noglib" -D DETECT_MODEL
 
 # Step 3: 烧录运行
 idf.py flash monitor
+
+
+
+rm -r build
+# 先设置好附加路径（只需一次）
+$env:IDF_EXTRA_ACTIONS_PATH = "H:\esp-who-master\esp-who-master\tools"
+
+# 然后执行完整构建流程
+idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.bsp.esp32_s3_eye_noglib" `
+       -D DETECT_MODEL="pedestrian_detect" `
+       -D BSP=esp32_s3_eye_noglib `
+       set-target esp32s3
+
+# #编译
+idf.py build
+
+第二种方法
+# 激活 ESP-IDF 环境
+F:\softinstall\ESP_IDF\Espressif\frameworks\esp-idf-v5.4.2\export.ps1
+
+# 构建 object_detect 示例
+idf.py -D SDKCONFIG_DEFAULTS="sdkconfig.bsp.esp32_s3_eye_noglib" `
+       -D DETECT_MODEL="pedestrian_detect" `
+       -D BSP=esp32_s3_eye_noglib `
+       set-target esp32s3
+
+idf.py build
